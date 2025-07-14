@@ -98,9 +98,6 @@ def edit_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Post.query.get(post_id)
-    if not post:
-        flash("Post not found.", "danger")
-        return redirect("/")
     Comment.query.filter_by(post_id=post.id).delete()
 
     db.session.delete(post)
