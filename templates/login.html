@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+{% block container %}
+
+<section class="d-flex align-items-center justify-content-center bg-light"
+         style="padding-top: 15vh; padding-bottom: 33vh;">
+    <div class="card shadow-sm border-0 rounded-4 p-4 w-100" style="max-width: 550px;">
+        <div class="card-body">
+            <h2 class="text-center mb-4 fw-bold">Login</h2>
+            {% for errors in form.errors.values() %}
+            <div class="alert alert-danger">
+                {% for error in errors %}
+                * {{error}}<br>
+                {% endfor %}
+            </div>
+            {%endfor%}
+
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.username(class="form-control rounded-pill", placeholder=form.username.label.text) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.password(class="form-control rounded-pill", placeholder=form.password.label.text) }}
+                </div>
+
+                <div class="d-grid">
+                    {{ form.submit(class="btn btn-dark rounded-pill py-2") }}
+                </div>
+                <p class="text-center mt-4 mb-0">
+                    Don't have an account yet?
+                    <a href="/register" class="text-decoration-none">Create one</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

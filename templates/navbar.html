@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom px-3 px-lg-5 fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2 me-3" href="/">
+      <img src="/static/images/cityfeeds.jpeg" alt="Logo" width="32" height="32">
+      <span class="fw-bold fs-5">CityFeeds</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <form class="d-flex my-3 my-lg-0 me-auto w-50">
+        <input class="form-control rounded-pill me-2" type="search" placeholder="Search..." aria-label="Search">
+        <button class="btn btn-outline-white rounded-pill" type="submit">
+          <i class="fa fa-magnifying-glass"></i>
+        </button>
+      </form>
+      <ul class="navbar-nav d-flex align-items-center gap-2 ms-lg-auto text-center text-lg-end">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a href="/posts" class="btn btn-outline-dark rounded-pill w-100 w-lg-auto">
+            <i class="fa fa-pen me-1"></i> Write Post
+          </a>
+        </li>
+        {% if current_user.role != 'Admin'%}
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="/liked" aria-label="Liked Posts">
+            <i class="fa-solid fa-heart fa-lg text-danger"></i>
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item dropdown">
+          <a class="btn btn-light dropdown-toggle rounded-pill w-100 w-lg-auto" href="#" role="button"
+             data-bs-toggle="dropdown">
+            <img src="/static/images/{{ current_user.img or 'default.png' }}" alt="Profile"
+                 class="rounded-circle"
+                 width="32" height="32" style="object-fit: cover;">
+            <span>{{ current_user.username }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown">
+            {% if current_user.role != 'Admin' %}
+            <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
+            {% endif %}
+            {% if current_user.role == 'Admin' %}
+            <li><a class="dropdown-item" href="/admin/users"><i class="fa-solid fa-users me-2"></i> Manage
+              Users</a></li>
+            {% endif%}
+            <li><a class="dropdown-item text-danger" href="/logout"><i
+                    class="fa-solid fa-arrow-right-from-bracket me-2"></i> Log Out</a>
+            </li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="/login" class="btn btn-outline-dark rounded-pill w-100 w-lg-auto">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a href="/register" class="btn btn-dark rounded-pill w-100 w-lg-auto">Get Started</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+

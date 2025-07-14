@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block container %}
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <p>
+                <a href="/"
+                   class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            </p>
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-4 bg-light d-flex flex-column justify-content-center align-items-center p-4">
+                        <img src="/static/images/{{ current_user.img or 'default.png' }}" alt="Profile Image"
+                             class="rounded-circle shadow-sm" width="120" height="120" style="object-fit: cover;">
+                        <strong><i class="fa-solid fa-user"></i> {{ current_user['username'] }}</strong>
+                        <small class="text-muted"><i class="fa-solid fa-envelope"></i> {{ current_user['email']
+                            }}</small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+
+                            <h4 class="mb-4 text-center text-md-start">Edit Profile</h4>
+
+                            <form method="post" enctype="multipart/form-data">
+                                {{ form.hidden_tag() }}
+
+                                {% for errors in form.errors.values() %}
+                                <div class="alert alert-danger">
+                                    {% for error in errors %}
+                                    * {{error}}<br>
+                                    {% endfor %}
+                                </div>
+                                {%endfor%}
+
+                                <div class="mb-3">
+                                    {{ form.username.label(class="form-label") }}
+                                    {{ form.username(class="form-control rounded-pill") }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.email.label(class="form-label") }}
+                                    {{ form.email(class="form-control rounded-pill") }}
+                                </div>
+
+                                <div class="mb-3">
+                                    {{ form.profile_image.label(class="form-label") }}
+                                    {{ form.profile_image(class="form-control rounded-pill") }}
+                                </div>
+                                <div class="d-grid">
+                                    {{ form.submit(class="btn btn-dark rounded-pill py-2") }}
+                                </div>
+                            </form>
+                            <form method="POST" action="{{ url_for('delete_account') }}"
+                                  onsubmit="return confirm('Are you sure? This cannot be undone.');"
+                                  class="text-end mt-4">
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-4">
+                                    <i class="fa-solid fa-trash me-2"></i> Delete Account
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}
